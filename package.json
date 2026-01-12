@@ -20,13 +20,9 @@
   },
   "license": "UNLICENSED",
   "author": "Fox",
-  "type": "commonjs",
-  "main": "./js/http.js",
+  "type": "module",
+  "main": "./js/http.mjs",
   "scripts": {
-    "test": "node ./js/http.js https://github.com/foxgirl-labs/scm-debugger"
-  },
-  "dependencies": {
-    "xhr2": "^0.2.1"
-  },
-  "devDependencies": {}
+    "test": "node ./js/http.mjs https://github.com/foxgirl-labs/scm-debugger"
+  }
 }

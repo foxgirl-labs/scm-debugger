@@ -4,47 +4,58 @@
 const refinfo_smart_ending = '/info/refs?service=git-upload-pack';
 const refinfo_dumb_ending = '/info/refs';
 
+/*
+ * Load global constants
+ *
+ * TODO: Fix so it works both as a firefox extension and node module
+ */
+//import { TAG, code } from './global.mjs';
+var TAG = 'FGD';
+var code = Object.freeze({
+  OK:    0,
+  NOWIN: 9
+});
+
 /**
  * Asynchronously retrieves URL with a GET request
  *
- * @param str url URL to retrieve
+ * @param  @string url URL to retrieve
  */
-function get(url) {
+async function get(url) {
 	var meth = "GET";
 	var asyn = true;
 	var body = null;
 
-// For Command Line Development
-	if (typeof XMLHttpRequest === "undefined") {
-		const XMLHttpRequest = require('xhr2');
-	}
-	
-	var req = new XMLHttpRequest();
-	req.open(meth, url, asyn);
+	try {
+		const head = new Headers();
+		head.append('Git-Protocol', 'version=2');
 
-	req.setRequestHeader('Git-Protocol', 'version=2');
-
-	req.onreadystatechange = () => {
-		state = req.readyState;
-		status = req.status;
-		body = req.responseText;
-//	body = req.response.valueOf;
-
-		if (state === XMLHttpRequest.DONE) {
-			console.debug(`FGD Response (${status}): ${body}`);
+		const response = await fetch(url, {
+			method: meth,
+			headers: head,
+			body: body
+		});
+		
+		if (!response.ok) {
+			throw new Error(`${TAG} Response (${status}): ${body}`);
 		}
-	};
 
-	req.send(body);
+//	TODO: Research parsing text with binary-aspects
+//	https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView
+		const bytes = await response.bytes();
+		console.debug(bytes);
+	} catch(error) {
+		console.error(error.message);
+	}	
 }
 
 /**
  * Normalizes URL for further processing
  *
- * @param str url URL to normalize
- * @param str loc current page's HREF
+ * @param  @string url URL to normalize
+ * @param  @string loc current page's HREF
  * 
- * @return str normalized URL
+ * @return @string normalized URL
  */
 function clean_url(url, loc) {
 	if (loc == null && typeof window !== "undefined") {
@@ -60,7 +71,7 @@ function clean_url(url, loc) {
  *
  * Checks different URLs for traces of a source code management repo
  *
- * @param str base URL for checking for traces of SCM repos
+ * @param  @string base URL for checking for traces of SCM repos
  */
 function checkSCM(url) {
 	if (typeof window === "undefined") {
@@ -71,8 +82,8 @@ function checkSCM(url) {
 
 	var git = new URL(clean_url(loc.href) + refinfo_smart_ending, loc.href);
 
-	console.debug(`FGD Location: ${loc.href}`);
-	console.debug(`FGD Checking Git: ${git.href}`);
+	console.debug(`${TAG} Location: ${loc.href}`);
+	console.debug(`${TAG} Checking Git: ${git.href}`);
 	get(git.href);
 }
 
@@ -81,10 +92,10 @@ function checkSCM(url) {
  *
  * Allows loading all functions into memory before running
  *
- * @param int argc number of parameters in argv
- * @param str[] argv parameters to control program flow
+ * @param  @int      argc number of parameters in argv
+ * @param  @string[] argv parameters to control program flow
  * 
- * @return int exit status code
+ * @return @int      exit status code
  */
 function main(argc, argv) {
 	if (argc == null || argv == null) {
@@ -93,12 +104,12 @@ function main(argc, argv) {
 	};
 
 	if (typeof window === "undefined") {
-		console.error(`FGD (No Window): Unfortunately, the main function needs a window at the moment...`);
-		return 1;
+		console.error(`${TAG} (No Window): Unfortunately, the main function needs a window at the moment...`);
+		return code.NOWIN;
 	}
 
 	checkSCM(window.location.href);
-	return 0;
+	return code.OK;
 }
 
 if (typeof window !== "undefined") {
@@ -107,7 +118,7 @@ if (typeof window !== "undefined") {
 	var argc = process.argv.length;
 	var argv = process.argv;
 
-	console.debug(`FGD (${argc}): ${argv}`);
+	console.debug(`${TAG} (${argc}): ${argv}`);
 
 	if (argc >= 3) {
 		checkSCM(argv[2]);

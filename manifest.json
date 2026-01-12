@@ -22,32 +22,32 @@
 				"http://*/*",
 				"https://*/*"
 			],
-			"js": ["js/http.js"]
+			"js": ["js/http.mjs"]
 		},
 		{
 			"matches": [
 				"ws://*/*",
 				"wss://*/*"
 			],
-			"js": ["js/ws.js"]
+			"js": ["js/ws.mjs"]
 		},
 		{
 			"matches": [
 				"ftp://*/*"
 			],
-			"js": ["js/ftp.js"]
+			"js": ["js/ftp.mjs"]
 		},
 		{
 			"matches": [
 				"file://*/*"
 			],
-			"js": ["js/file.js"]
+			"js": ["js/file.mjs"]
 		},
 		{
 			"matches": [
 				"<all_urls>"
 			],
-			"js": ["js/all.js"]
+			"js": ["js/all.mjs"]
 		}
 	]
 }
