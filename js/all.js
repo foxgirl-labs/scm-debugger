@@ -14,7 +14,7 @@ function main(argc, argv) {
 		var argv = [];
 	};
 
-	console.warning(`FGD (all): Not Implemented Yet...`);
+//console.warn(`FGD (all): Not Implemented Yet...`);
 	return 0;
 }
 

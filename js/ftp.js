@@ -14,7 +14,7 @@ function main(argc, argv) {
 		var argv = [];
 	};
 
-	console.warning(`FGD (ftp): Not Implemented Yet...`);
+	console.warn(`FGD (ftp): Not Implemented Yet...`);
 	return 0;
 }
 
