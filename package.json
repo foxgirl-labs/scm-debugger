@@ -1,0 +1,32 @@
+{
+  "name": "scm-debugger",
+  "version": "0.0.1",
+  "description": "Fox's Source Code Management (SCM) Repo Debugger",
+  "keywords": [
+    "scm",
+    "debug",
+    "debugger",
+    "browser",
+    "extension",
+    "git"
+  ],
+  "homepage": "https://github.com/foxgirl-labs/scm-debugger#readme",
+  "bugs": {
+    "url": "https://github.com/foxgirl-labs/scm-debugger/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foxgirl-labs/scm-debugger.git"
+  },
+  "license": "UNLICENSED",
+  "author": "Fox",
+  "type": "commonjs",
+  "main": "./js/http.js",
+  "scripts": {
+    "test": "node ./js/http.js https://github.com/foxgirl-labs/scm-debugger"
+  },
+  "dependencies": {
+    "xhr2": "^0.2.1"
+  },
+  "devDependencies": {}
+}

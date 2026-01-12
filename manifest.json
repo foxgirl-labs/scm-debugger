@@ -1,0 +1,53 @@
+{
+	"manifest_version": 2,
+	"name": "Git Debugger",
+	"version": "1.0",
+	"description": "In-Browser Debugging Tool For SCMs such as Git",
+//"icons": { "48": "icons/logo-48.png" },
+	"protocol_handlers": [
+//	{
+//		"name": "anonymous git:// scheme",
+//		"protocol": "git",
+//		"uriTemplate": "d?%s"
+//	},
+		{
+			"name": "ssh:// scheme",
+			"protocol": "ssh",
+			"uriTemplate": "d?%s"
+		}
+	],
+	"content_scripts": [
+		{
+			"matches": [
+				"http://*/*",
+				"https://*/*"
+			],
+			"js": ["js/http.js"]
+		},
+		{
+			"matches": [
+				"ws://*/*",
+				"wss://*/*"
+			],
+			"js": ["js/ws.js"]
+		},
+		{
+			"matches": [
+				"ftp://*/*"
+			],
+			"js": ["js/ftp.js"]
+		},
+		{
+			"matches": [
+				"file://*/*"
+			],
+			"js": ["js/file.js"]
+		},
+		{
+			"matches": [
+				"<all_urls>"
+			],
+			"js": ["js/all.js"]
+		}
+	]
+}
