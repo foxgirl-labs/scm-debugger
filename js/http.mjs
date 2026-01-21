@@ -1,8 +1,15 @@
 // The output format is slightly different between smart/dumb if server is
 // smart. Else, it may just be a dumb server sending a static file over
 // regardless of query parameters. We have to check both formats regardless
-const refinfo_smart_ending = '/info/refs?service=git-upload-pack';
-const refinfo_dumb_ending = '/info/refs';
+const git_refinfo_smart_ending = '/info/refs?service=git-upload-pack';
+const git_refinfo_dumb_ending = '/info/refs';
+
+// Fossil Client Request Headers/Settings
+const fossil_http_method = 'POST';
+const fossil_debug_content_type = 'application/x-fossil-debug';
+const fossil_content_type = 'application/x-fossil';
+const fossil_content_length = 0;
+
 
 /*
  * Load global constants
@@ -10,7 +17,7 @@ const refinfo_dumb_ending = '/info/refs';
  * TODO: Fix so it works both as a firefox extension and node module
  */
 //import { TAG, code } from './global.mjs';
-var TAG = 'FGD';
+var TAG = 'FSD';
 var code = Object.freeze({
   OK:    0,
   NOWIN: 9
@@ -80,7 +87,7 @@ function checkSCM(url) {
 		var loc = new URL(url, window.location.href);
 	}
 
-	var git = new URL(clean_url(loc.href) + refinfo_smart_ending, loc.href);
+	var git = new URL(clean_url(loc.href) + git_refinfo_smart_ending, loc.href);
 
 	console.debug(`${TAG} Location: ${loc.href}`);
 	console.debug(`${TAG} Checking Git: ${git.href}`);

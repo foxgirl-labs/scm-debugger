@@ -4,7 +4,7 @@
  * @readonly
  * @string
  */
-export const TAG = 'FGD';
+export const TAG = 'FSD';
 
 /**
  * Enum for method return/status codes

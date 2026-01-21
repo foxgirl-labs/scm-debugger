@@ -4,7 +4,7 @@
  * TODO: Fix so it works both as a firefox extension and node module
  */
 //import { TAG, code } from './global.mjs';
-var TAG = 'FGD';
+var TAG = 'FSD';
 var code = Object.freeze({
   OK:    0,
   NOWIN: 9
